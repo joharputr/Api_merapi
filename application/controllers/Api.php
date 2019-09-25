@@ -40,7 +40,13 @@ class Api extends REST_Controller
             // }
         }
 
-        $this->response($data, REST_Controller::HTTP_OK);
+        $result = array(
+            'status' => 200,
+            'message' => 'success',
+            'data' => $data
+        );
+
+        $this->response($result, REST_Controller::HTTP_OK);
     }
 
     /**
@@ -52,10 +58,13 @@ class Api extends REST_Controller
     {
         $input = $this->input->post();
         $this->db->insert('data', $input);
-        $this->response(
-            ['Item created successfully.'],
-            REST_Controller::HTTP_OK
+        // -
+        $result = array(
+            'status' => 200,
+            'message' => 'Item created successfully.',
+            'data' => null
         );
+        $this->response($result, REST_Controller::HTTP_OK);
     }
 
     /**
@@ -67,11 +76,13 @@ class Api extends REST_Controller
     {
         $input = $this->put();
         $this->db->update('data', $input, array('id' => $id));
-
-        $this->response(
-            ['Item updated successfully.'],
-            REST_Controller::HTTP_OK
+        // -
+        $result = array(
+            'status' => 200,
+            'message' => 'Item updated successfully.',
+            'data' => null
         );
+        $this->response($result, REST_Controller::HTTP_OK);
     }
 
     /**
@@ -82,9 +93,12 @@ class Api extends REST_Controller
     public function hapus_delete($id)
     {
         $this->db->delete('data', array('id' => $id));
-        $this->response(
-            ['Item deleted successfully.'],
-            REST_Controller::HTTP_OK
+        // -
+        $result = array(
+            'status' => 200,
+            'message' => 'Item deleted successfully.',
+            'data' => null
         );
+        $this->response($result, REST_Controller::HTTP_OK);
     }
 }
