@@ -62,7 +62,7 @@ class Api extends REST_Controller
         $result = array(
             'status' => 200,
             'message' => 'Item created successfully.',
-            'data' => null
+            'data' => true
         );
         $this->response($result, REST_Controller::HTTP_OK);
     }
@@ -80,7 +80,7 @@ class Api extends REST_Controller
         $result = array(
             'status' => 200,
             'message' => 'Item updated successfully.',
-            'data' => null
+            'data' => true
         );
         $this->response($result, REST_Controller::HTTP_OK);
     }
@@ -97,7 +97,7 @@ class Api extends REST_Controller
         $result = array(
             'status' => 200,
             'message' => 'Item deleted successfully.',
-            'data' => null
+            'data' => true
         );
         $this->response($result, REST_Controller::HTTP_OK);
     }
