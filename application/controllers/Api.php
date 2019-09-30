@@ -30,7 +30,7 @@ class Api extends REST_Controller
                             SELECT b.message FROM data b ORDER BY distance ASC LIMIT 1
                         ) AS 'minim_distance'
                     FROM data a";
-            $data = $this->db->get("data")->result_array();
+            $data = $this->db->query($sql)->result_array();
        } 
 
 
