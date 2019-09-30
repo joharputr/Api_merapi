@@ -38,7 +38,12 @@ class Api extends REST_Controller
             //         $data[$key]["has_nama"] = true;
             //     }
             // }
-        }
+            $this->db->select('MIN(distance) as min_distance');
+            $this->db->from('data');
+            $query = $this->db->get();
+            $data["minimal_distance_name"] = $query
+       } 
+
 
         $result = array(
             'status' => 200,
@@ -72,10 +77,10 @@ class Api extends REST_Controller
      *
      * @return Response
      */
-    public function edit_put($id)
+    public function edit_post($number)
     {
-        $input = $this->put();
-        $this->db->update('data', $input, array('id' => $id));
+        $input = $this->post();
+        $this->db->update('data', $input, array('number' => $number));
         // -
         $result = array(
             'status' => 200,

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 25 Sep 2019 pada 15.27
+-- Waktu pembuatan: 30 Sep 2019 pada 09.25
 -- Versi server: 10.3.15-MariaDB
 -- Versi PHP: 7.3.6
 
@@ -34,19 +34,23 @@ CREATE TABLE `data` (
   `latitude` varchar(500) NOT NULL,
   `longitude` varchar(500) NOT NULL,
   `expires` varchar(500) NOT NULL,
-  `message` varchar(500) NOT NULL
+  `message` varchar(500) NOT NULL,
+  `type` enum('circle','polygone','polyline','marker') DEFAULT 'marker',
+  `radius` varchar(1000) NOT NULL,
+  `distance` varchar(1000) NOT NULL,
+  `minimal_distance_name` varchar(1000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `data`
 --
 
-INSERT INTO `data` (`id`, `number`, `latitude`, `longitude`, `expires`, `message`) VALUES
-(4, '641', '-7.695283181796236', '110.41864838451147', '1569392476128', 'yoi'),
-(5, '642', '-7.694112972062881', '110.40920902043581', '1569392485274', 'yoi'),
-(6, '643', '-7.66561726994719', '110.41315723210573', '1569392523992', 'yoi'),
-(7, '644', '-7.659917966845059', '110.40989566594362', '1569392636555', 'yoi'),
-(8, '645', '-7.694280429871781', '110.42243164032698', '1569393741843', 'yoi');
+INSERT INTO `data` (`id`, `number`, `latitude`, `longitude`, `expires`, `message`, `type`, `radius`, `distance`, `minimal_distance_name`) VALUES
+(80, '792', '-7.5428228958469425', '110.44521600008011', '1569517885156', 'GGWP', 'circle', '800.0', '16662.335538998184', ''),
+(81, '793', '-7.655215452722372', '110.41140742599966', '1569551050288', 'GGWP', 'circle', '1000.0', '3883.0773158815864', ''),
+(82, '794', '-7.68664940342653', '110.41144262999296', '1569551068338', 'GGWP', 'circle', '600.0', '613.0355463156657', ''),
+(83, '795', '-7.679665832443896', '110.38757633417845', '1569826172415', 'GGWP', 'circle', '600.0', '3328.0509819411277', ''),
+(84, '796', '-7.304871744555436', '110.40091663599013', '1569826291547', 'Jauhbbgt', 'circle', '600.0', '42838.95873243746', '');
 
 --
 -- Indexes for dumped tables
@@ -66,7 +70,7 @@ ALTER TABLE `data`
 -- AUTO_INCREMENT untuk tabel `data`
 --
 ALTER TABLE `data`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
