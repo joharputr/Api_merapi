@@ -41,7 +41,7 @@ class Api extends REST_Controller
             $this->db->select('MIN(distance) as min_distance');
             $this->db->from('data');
             $query = $this->db->get();
-            $data["minimal_distance_name"] = $query
+            $data["minimal_distance_name"] = $query;
        } 
 
 
