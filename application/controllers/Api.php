@@ -25,6 +25,11 @@ class Api extends REST_Controller
         if (!empty($id)) {
             $data = $this->db->get_where("data", ['id' => $id])->row_array();
         } else {
+            $sql = "SELECT *, 
+                        (
+                            SELECT b.message FROM data b ORDER BY distance ASC LIMIT 1
+                        ) AS 'minim_distance'
+                    FROM data a";
             $data = $this->db->get("data")->result_array();
        } 
 
