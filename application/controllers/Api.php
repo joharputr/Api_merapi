@@ -24,24 +24,8 @@ class Api extends REST_Controller
     {
         if (!empty($id)) {
             $data = $this->db->get_where("data", ['id' => $id])->row_array();
-            //   if (empty($data["nama"]) ) {
-            //       $data["has_nama"] = false;
-            //   }else{
-            //     $data["has_nama"] = true;
-            // }
         } else {
             $data = $this->db->get("data")->result_array();
-            // foreach ($data as $key => $value) {
-            //     if (empty($data[$key]["nama"])) {
-            //         $data[$key]["has_nama"] = false;
-            //     } else {
-            //         $data[$key]["has_nama"] = true;
-            //     }
-            // }
-            $this->db->select('MIN(distance) as min_distance');
-            $this->db->from('data');
-            $query = $this->db->get();
-            $data["minimal_distance_name"] = $query;
        } 
 
 
