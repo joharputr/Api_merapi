@@ -132,6 +132,16 @@ class Api extends REST_Controller
         $nama = $this->post('nama');
         $hp = $this->post('hp');
         $password = $this->post('password');
+        // cek user
+        if (count($this->db->get_where("user", ['hp' => $hp])->row_array()) > 0) {
+            // -
+            $result = array(
+                'status' => 403,
+                'message' => 'user already exist.',
+                'data' => true
+            );
+            $this->response($result, REST_Controller::HTTP_OK);
+        }
         // params
         $params = [
             'nama' => $nama,
