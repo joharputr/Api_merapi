@@ -133,7 +133,7 @@ class Api extends REST_Controller
         $hp = $this->post('hp');
         $password = $this->post('password');
         // cek user
-        if (count($this->db->get_where("user", ['hp' => $hp])->row_array()) > 0) {
+        if ($this->db->get_where("user", ['hp' => $hp])->row_array()) {
             // -
             $result = array(
                 'status' => 403,
