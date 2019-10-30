@@ -140,7 +140,7 @@ class Api extends REST_Controller
                 'message' => 'user already exist.',
                 'data' => true
             );
-            $this->response($result, REST_Controller::HTTP_OK);
+            return $this->response($result, REST_Controller::HTTP_OK);
         }
         // params
         $params = [
@@ -163,6 +163,6 @@ class Api extends REST_Controller
                 'data' => true
             );
         }
-        $this->response($result, REST_Controller::HTTP_OK);
+        return $this->response($result, REST_Controller::HTTP_OK);
     }
 }
