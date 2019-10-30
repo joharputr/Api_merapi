@@ -25,14 +25,9 @@ class Api extends REST_Controller
         if (!empty($id)) {
             $data = $this->db->get_where("data", ['id' => $id])->row_array();
         } else {
-            $sql = "SELECT *, 
-                        (
-                            SELECT b.message FROM data b ORDER BY distance ASC LIMIT 1
-                        ) AS 'minim_distance'
-                    FROM data a";
+            $sql = "SELECT * FROM data a";
             $data = $this->db->query($sql)->result_array();
-       } 
-
+        }
 
         $result = array(
             'status' => 200,
@@ -93,6 +88,62 @@ class Api extends REST_Controller
             'message' => 'Item deleted successfully.',
             'data' => true
         );
+        $this->response($result, REST_Controller::HTTP_OK);
+    }
+    /**
+     * login
+     *
+     * @param 
+     * @return
+     */
+    public function login_post($hp, $password)
+    {
+        $users = $this->db->get_where("user", ['hp' => $hp, 'password' => $password])->row_array();
+        if ($users->num_rows() > 0) {
+            // -
+            $result = array(
+                'status' => 200,
+                'message' => 'login successfully.',
+                'data' => $users
+            );
+        } else {
+            // -
+            $result = array(
+                'status' => 403,
+                'message' => 'login failed.',
+                'data' => true
+            );
+        }
+        $this->response($result, REST_Controller::HTTP_OK);
+    }
+    /**
+     * register
+     *
+     * @param 
+     * @return
+     */
+    public function register_post($nama, $hp, $password)
+    {
+        $params = [
+            'nama' => $nama,
+            'hp' => $hp,
+            'password' => $password
+        ];
+        if ($this->db->insert('user', $params)) {
+            // -
+            $result = array(
+                'status' => 200,
+                'message' => 'register successfully.',
+                'data' => true
+            );
+        } else {
+            // -
+            $result = array(
+                'status' => 403,
+                'message' => 'register failed.',
+                'data' => true
+            );
+        }
         $this->response($result, REST_Controller::HTTP_OK);
     }
 }
