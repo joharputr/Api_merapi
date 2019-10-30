@@ -103,7 +103,11 @@ class Api extends REST_Controller
         $password = $this->post('password');
         // users
         $users = $this->db->get_where("user", ['hp' => $hp, 'password' => $password])->row_array();
-        if ($users->num_rows() > 0) {
+        if ($users) {
+            // update login
+            $params = ['is_login' => '1'];
+            $where = ['id' => $users['id']];
+            $this->db->update('user', $params, $where);
             // -
             $result = array(
                 'status' => 200,
