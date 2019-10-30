@@ -96,8 +96,12 @@ class Api extends REST_Controller
      * @param 
      * @return
      */
-    public function login_post($hp, $password)
+    public function login_post()
     {
+        // --
+        $hp = $this->post('hp');
+        $password = $this->post('password');
+        // users
         $users = $this->db->get_where("user", ['hp' => $hp, 'password' => $password])->row_array();
         if ($users->num_rows() > 0) {
             // -
@@ -122,8 +126,13 @@ class Api extends REST_Controller
      * @param 
      * @return
      */
-    public function register_post($nama, $hp, $password)
+    public function register_post()
     {
+        // --
+        $nama = $this->post('nama');
+        $hp = $this->post('hp');
+        $password = $this->post('password');
+        // params
         $params = [
             'nama' => $nama,
             'hp' => $hp,
