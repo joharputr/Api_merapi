@@ -79,9 +79,9 @@ class Api extends REST_Controller
      *
      * @return Response
      */
-    public function hapus_delete($id)
+    public function hapus_delete($number)
     {
-        $this->db->delete('data', array('id' => $id));
+        $this->db->delete('data', array('number' => $number));
         // -
         $result = array(
             'status' => 200,
@@ -112,7 +112,7 @@ class Api extends REST_Controller
             $result = array(
                 'status' => 200,
                 'message' => 'login successfully.',
-                'data' => $users
+                'data' =>  $users = $this->db->get_where("user", ['hp' => $hp, 'password' => $password])->row_array()
             );
         } else {
             // -
@@ -168,5 +168,147 @@ class Api extends REST_Controller
             );
         }
         return $this->response($result, REST_Controller::HTTP_OK);
+    }
+
+        /**
+     * login
+     *
+     * @param 
+     * @return
+     */
+    public function logout_post()
+    {
+        // --
+        $hp = $this->post('hp');
+        $password = $this->post('password');
+        // users
+        $users = $this->db->get_where("user", ['hp' => $hp, 'password' => $password])->row_array();
+        if ($users) {
+            // update login
+            $params = ['is_login' => '0'];
+            $where = ['id' => $users['id']];
+            $this->db->update('user', $params, $where);
+            // -
+            $result = array(
+                'status' => 200,
+                'message' => 'login successfully.',
+                'data' => $users = $this->db->get_where("user", ['hp' => $hp, 'password' => $password])->row_array()
+            );
+        } else {
+            // -
+            $result = array(
+                'status' => 403,
+                'message' => 'logout failed.',
+                'data' => true
+            );
+        }
+        $this->response($result, REST_Controller::HTTP_OK);
+    }
+
+    /**
+     * Get All Data from this method.
+     *
+     * @return Response
+     */
+    public function lihatUser_get($id = 0)
+    {
+        if (!empty($id)) {
+            $data = $this->db->get_where("user", ['id' => $id])->row_array();
+        } else {
+            $sql = "SELECT * FROM user a";
+            $data = $this->db->query($sql)->result_array();
+        }
+
+        $result = array(
+            'status' => 200,
+            'message' => 'success',
+            'data' => $data
+        );
+
+        $this->response($result, REST_Controller::HTTP_OK);
+    }
+
+     public function edituser_post($id)
+    {
+        $input = $this->post();
+        $this->db->update('user', $input, array('id' => $id));
+        // -
+        $result = array(
+            'status' => 200,
+            'message' => 'Item updated successfully.',
+            'data' => true
+        );
+        $this->response($result, REST_Controller::HTTP_OK);
+    }
+/**
+     * Get All Data from this method.
+     *
+     * @return Response
+     */
+    public function postDataEnter_post()
+    {
+        $input = $this->input->post();
+        $this->db->insert('data_enter', $input);
+        // -
+        $result = array(
+            'status' => 200,
+            'message' => 'Item created successfully.',
+            'data' => true
+        );
+        $this->response($result, REST_Controller::HTTP_OK);
+    }
+
+     /**
+     * Get All Data from this method.
+     *
+     * @return Response
+     */
+    public function lihatDataEnter_get($id = 0)
+    {
+        if (!empty($id)) {
+            $data = $this->db->get_where("data_enter", ['id' => $id])->row_array();
+        } else {
+            $sql = "SELECT * FROM `data_enter` ORDER BY id DESC";
+            $data = $this->db->query($sql)->result_array();
+        }
+
+        $result = array(
+            'status' => 200,
+            'message' => 'success',
+            'data' => $data
+        );
+
+        $this->response($result, REST_Controller::HTTP_OK);
+    }
+
+     public function lihatDataExit_get($id = 0)
+    {
+        if (!empty($id)) {
+            $data = $this->db->get_where("data_exit", ['id' => $id])->row_array();
+        } else {
+            $sql = "SELECT * FROM `data_exit` ORDER BY id DESC";
+            $data = $this->db->query($sql)->result_array();
+        }
+
+        $result = array(
+            'status' => 200,
+            'message' => 'success',
+            'data' => $data
+        );
+
+        $this->response($result, REST_Controller::HTTP_OK);
+    }
+
+       public function postDataExit_post()
+    {
+        $input = $this->input->post();
+        $this->db->insert('data_exit', $input);
+        // -
+        $result = array(
+            'status' => 200,
+            'message' => 'Item created successfully.',
+            'data' => true
+        );
+        $this->response($result, REST_Controller::HTTP_OK);
     }
 }
