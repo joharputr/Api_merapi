@@ -170,7 +170,7 @@ class Api extends REST_Controller
         return $this->response($result, REST_Controller::HTTP_OK);
     }
 
-        /**
+    /**
      * login
      *
      * @param 
@@ -228,7 +228,7 @@ class Api extends REST_Controller
         $this->response($result, REST_Controller::HTTP_OK);
     }
 
-     public function edituser_post($id)
+    public function edituser_post($id)
     {
         $input = $this->post();
         $this->db->update('user', $input, array('id' => $id));
@@ -240,7 +240,7 @@ class Api extends REST_Controller
         );
         $this->response($result, REST_Controller::HTTP_OK);
     }
-/**
+    /**
      * Get All Data from this method.
      *
      * @return Response
@@ -258,7 +258,7 @@ class Api extends REST_Controller
         $this->response($result, REST_Controller::HTTP_OK);
     }
 
-     /**
+    /**
      * Get All Data from this method.
      *
      * @return Response
@@ -281,7 +281,7 @@ class Api extends REST_Controller
         $this->response($result, REST_Controller::HTTP_OK);
     }
 
-     public function lihatDataExit_get($id = 0)
+    public function lihatDataExit_get($id = 0)
     {
         if (!empty($id)) {
             $data = $this->db->get_where("data_exit", ['id' => $id])->row_array();
@@ -299,7 +299,7 @@ class Api extends REST_Controller
         $this->response($result, REST_Controller::HTTP_OK);
     }
 
-       public function postDataExit_post()
+    public function postDataExit_post()
     {
         $input = $this->input->post();
         $this->db->insert('data_exit', $input);
@@ -312,7 +312,7 @@ class Api extends REST_Controller
         $this->response($result, REST_Controller::HTTP_OK);
     }
 
-      public function lihatDataAman_get($id = 0)
+    public function lihatDataAman_get($id = 0)
     {
         if (!empty($id)) {
             $data = $this->db->get_where("data_user_aman", ['id' => $id])->row_array();
@@ -330,7 +330,7 @@ class Api extends REST_Controller
         $this->response($result, REST_Controller::HTTP_OK);
     }
 
-       public function postDataAman_post()
+    public function postDataAman_post()
     {
         $input = $this->input->post();
         $this->db->insert('data_user_aman', $input);
@@ -340,6 +340,31 @@ class Api extends REST_Controller
             'message' => 'Item created successfully.',
             'data' => true
         );
+        $this->response($result, REST_Controller::HTTP_OK);
+    }
+
+    /**
+     * Search method
+     *
+     * @return Response
+     */
+    public function search_get()
+    {
+        /// query params
+        $q = $this->get('q') ?: '';
+
+        // datas
+        $this->db->like('phone', $q);
+        $this->db->or_like('nama_zona', $q);
+        $this->db->or_like('waktu', $q);
+        $data = $this->db->get('data_user_aman')->result_array();
+
+        $result = array(
+            'status' => 200,
+            'message' => 'success',
+            'data' => $data
+        );
+
         $this->response($result, REST_Controller::HTTP_OK);
     }
 }
