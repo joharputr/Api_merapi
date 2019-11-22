@@ -99,10 +99,10 @@ class Api extends REST_Controller
     public function login_post()
     {
         // --
-        $hp = $this->post('hp');
+        $nama = $this->post('nama');
         $password = $this->post('password');
         // users
-        $users = $this->db->get_where("user", ['hp' => $hp, 'password' => $password])->row_array();
+        $users = $this->db->get_where("user", ['nama' => $nama, 'password' => $password])->row_array();
         if ($users) {
             // update login
             $params = ['is_login' => '1'];
@@ -112,7 +112,7 @@ class Api extends REST_Controller
             $result = array(
                 'status' => 200,
                 'message' => 'login successfully.',
-                'data' =>  $users = $this->db->get_where("user", ['hp' => $hp, 'password' => $password])->row_array()
+                'data' =>  $users = $this->db->get_where("user", ['nama' => $nama, 'password' => $password])->row_array()
             );
         } else {
             // -
@@ -179,10 +179,10 @@ class Api extends REST_Controller
     public function logout_post()
     {
         // --
-        $hp = $this->post('hp');
+        $nama = $this->post('nama');
         $password = $this->post('password');
         // users
-        $users = $this->db->get_where("user", ['hp' => $hp, 'password' => $password])->row_array();
+        $users = $this->db->get_where("user", ['nama' => $nama, 'password' => $password])->row_array();
         if ($users) {
             // update login
             $params = ['is_login' => '0'];
@@ -192,7 +192,7 @@ class Api extends REST_Controller
             $result = array(
                 'status' => 200,
                 'message' => 'login successfully.',
-                'data' => $users = $this->db->get_where("user", ['hp' => $hp, 'password' => $password])->row_array()
+                'data' => $users = $this->db->get_where("user", ['nama' => $nama, 'password' => $password])->row_array()
             );
         } else {
             // -
@@ -303,6 +303,37 @@ class Api extends REST_Controller
     {
         $input = $this->input->post();
         $this->db->insert('data_exit', $input);
+        // -
+        $result = array(
+            'status' => 200,
+            'message' => 'Item created successfully.',
+            'data' => true
+        );
+        $this->response($result, REST_Controller::HTTP_OK);
+    }
+
+      public function lihatDataAman_get($id = 0)
+    {
+        if (!empty($id)) {
+            $data = $this->db->get_where("data_user_aman", ['id' => $id])->row_array();
+        } else {
+            $sql = "SELECT * FROM `data_user_aman` ORDER BY id DESC";
+            $data = $this->db->query($sql)->result_array();
+        }
+
+        $result = array(
+            'status' => 200,
+            'message' => 'success',
+            'data' => $data
+        );
+
+        $this->response($result, REST_Controller::HTTP_OK);
+    }
+
+       public function postDataAman_post()
+    {
+        $input = $this->input->post();
+        $this->db->insert('data_user_aman', $input);
         // -
         $result = array(
             'status' => 200,
